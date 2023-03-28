@@ -1,9 +1,11 @@
 /* @refresh reload */
-import 'windi.css';
-
+// import 'windi.css';
 import { render } from 'solid-js/web';
 import { Router } from '@solidjs/router';
 import App from './app';
+
+import '../master.css'
+import "devextreme/dist/css/dx.light.css";
 
 const root = document.getElementById('root');
 

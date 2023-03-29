@@ -9,7 +9,6 @@ import {
 } from "solid-js";
 import { ComponentProps } from "../../utils/Form";
 import Drawer, { Properties } from "devextreme/ui/drawer";
-import List from "devextreme/ui/list";
 
 export function DrawerComponent(
   props: ComponentProps & { children: JSXElement } & {
@@ -22,7 +21,6 @@ export function DrawerComponent(
 
   return (
     <div aria-labelledby={props["aria-labeledby"]}>
-      {/* <button onClick={() => setSideBarOpen(!isSideBarOpen())}>toggle</button> */}
       <div
         ref={(el) => {
           onMount(() => {

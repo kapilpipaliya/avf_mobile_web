@@ -8,6 +8,7 @@ import List from "devextreme/ui/list";
 import { Link } from "@solidjs/router";
 import { Icon } from "@iconify-icon/solid";
 import { DrawerComponent } from "../components/devextreme/Drawer";
+import { ActionCards } from "../components/home/ActionCards";
 
 export default function Home() {
   const navTemplate = function (e: Element) {
@@ -15,16 +16,42 @@ export default function Home() {
       <div
         ref={(el) => {
           new List(el, {
-            itemTemplate: (itemData: any) => {
+            itemTemplate: (itemData: any, itemIndex: any, itemElement: any) => {
+              const itemParent = itemElement.parentElement;
+              if (itemIndex == 0) {
+                console.log(itemElement);
+                itemParent.style.marginTop = "10px";
+                itemParent.style.paddingBottom = "8px";
+                itemParent.style.borderBottom = "1px solid #ddd";
+              } else {
+                itemParent.style.borderTop = "none";
+                itemParent.style.marginBottom = "5px";
+                itemParent.style.marginTop = "5px";
+              }
+
               return (
-                <div class="flex ai:center gap:10">
-                  <Icon icon={itemData.icon} width={15} />
-                  <Link
-                    href="#"
-                    class="text-decoration:none color:#111 font-weight:400"
-                  >
-                    {itemData.text}
-                  </Link>
+                <div class={itemIndex==0 ? "flex flex:column jc:center gap:9 px:6" : "flex ai:center gap:10 px:6"}>
+                  {itemIndex == 0 ? (
+                    <>
+                      <Icon icon={itemData.icon} width={30} style={{color: "#999"}} />
+                      <Link
+                        href={itemData.link}
+                        class="text-decoration:none color:red font-weight:400"
+                      >
+                        {itemData.text}
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Icon icon={itemData.icon} width={17} />
+                      <Link
+                        href="#"
+                        class="text-decoration:none color:#111 font-weight:400"
+                      >
+                        {itemData.text}
+                      </Link>
+                    </>
+                  )}
                 </div>
               );
             },
@@ -41,6 +68,7 @@ export default function Home() {
 
   const [isSideBarOpen, setSideBarOpen] = createSignal(false);
 
+  // Meta and Data
   const navbarMeta = newVertex(0, ["Meta"], {
     id: "navbar",
     props: {
@@ -49,7 +77,7 @@ export default function Home() {
       openedStateMode: "overlap",
       closeOnOutsideClick: true,
       revealMode: "expand",
-      maxSize: 200,
+      maxSize: 250,
     },
   });
 
@@ -68,7 +96,7 @@ export default function Home() {
   };
 
   return (
-    <div class="bg:#f7f7f7 min-height:100vh">
+    <div class="">
       <DrawerComponent
         isSideBarOpen={isSideBarOpen}
         setSideBarOpen={setSideBarOpen}
@@ -77,9 +105,17 @@ export default function Home() {
         data={data}
         setValue={setValue}
       >
-        <Navbar isSideBarOpen={isSideBarOpen} setSideBarOpen={setSideBarOpen} meta={navbarMeta} data={data} setValue={setValue} />
+        <Navbar
+          isSideBarOpen={isSideBarOpen}
+          setSideBarOpen={setSideBarOpen}
+          meta={navbarMeta}
+          data={data}
+          setValue={setValue}
+        />
 
-        <div class="p:20">
+        <div class="p:15 bg:#f7f7f7 min-height:100vh">
+          <ActionCards meta={galleryMeta} data={data} setValue={setValue} />
+
           <GallerySection meta={galleryMeta} data={data} setValue={setValue} />
         </div>
       </DrawerComponent>

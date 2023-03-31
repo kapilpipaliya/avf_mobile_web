@@ -129,7 +129,7 @@ export default function Home() {
 
           <GallerySection meta={galleryMeta} data={galleryData} setValue={setValue} />
 
-          {/* <TodaysEnergizerSection meta={todayEnergizerMeta} data={todaysEnergizerData} setValue={setValue} /> */}
+          <TodaysEnergizerSection meta={todayEnergizerMeta} data={todaysEnergizerData} setValue={setValue} />
         </div>
       </DrawerComponent>
     </div>

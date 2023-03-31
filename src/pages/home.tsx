@@ -2,7 +2,7 @@ import { createSignal } from "solid-js";
 import { Navbar } from "../components/home/Navbar";
 import { Vertex } from "../utils/Form";
 import { newVertex } from "../utils/utils";
-import { navItems, homeGalleryData, todayData } from "../data";
+import { navItems, homeGalleryData, todayData, recentEvents } from "../data";
 import { GallerySection } from "../components/home/GallerySection";
 import List from "devextreme/ui/list";
 import { Link } from "@solidjs/router";
@@ -10,6 +10,7 @@ import { Icon } from "@iconify-icon/solid";
 import { DrawerComponent } from "../components/devextreme/Drawer";
 import { ActionCards } from "../components/home/ActionCards";
 import { TodaysEnergizerSection } from "../components/home/TodaysEnergizerSection";
+import { RecentEvents } from "../components/home/RecentEvents";
 
 export default function Home() {
   const navTemplate = function (e: Element) {
@@ -78,6 +79,7 @@ export default function Home() {
       closeOnOutsideClick: true,
       revealMode: "expand",
       maxSize: 250,
+      shading: true,
     },
   });
 
@@ -88,6 +90,11 @@ export default function Home() {
 
   const todayEnergizerMeta = newVertex(0, ["Meta"], {
     id: "todayEnergizer",
+    props: {},
+  });
+
+  const recentEventsMeta = newVertex(0, ["Meta"], {
+    id: "recentEvents",
     props: {},
   });
 
@@ -102,6 +109,9 @@ export default function Home() {
 
   const todaysEnergizerData = newVertex(0, ["Vertex"], { title: "Today's Energizer", todayEnergizer: todayData })
 
+  const recentEventsData = newVertex(0, ["Vertex"], { title: "Recent Events", recentEvents: recentEvents });
+
+  // Handlers
   const setValue = (attribute: Vertex, data: any) => {
     console.log(attribute, data);
   };
@@ -130,6 +140,8 @@ export default function Home() {
           <GallerySection meta={galleryMeta} data={galleryData} setValue={setValue} />
 
           <TodaysEnergizerSection meta={todayEnergizerMeta} data={todaysEnergizerData} setValue={setValue} />
+
+          <RecentEvents meta={recentEventsMeta} data={recentEventsData} setValue={setValue} />
         </div>
       </DrawerComponent>
     </div>

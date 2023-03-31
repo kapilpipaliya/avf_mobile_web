@@ -14,11 +14,11 @@ export function TodaysEnergizerSection(props: ComponentProps) {
                 {props.data.properties[props.meta.properties.id]
                 .map((item: any) => {
                     return (
-                        <a href={item.link} class="rel block">
+                        <A href={item.link} class="rel block">
                             <small class="abs top:10 left:8 color:#ccc bg:#333 p:2|4 r:2">{item.lang}</small>
                             <Icon icon="material-symbols:play-circle-outline" width={30} class="abs bottom:10 left:5 color:white" />
                             <img src={item.image} class="w:250 r:6" alt="" />
-                        </a>
+                        </A>
                     )}
                 )}
             </div>

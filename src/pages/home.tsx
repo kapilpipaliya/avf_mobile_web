@@ -2,13 +2,14 @@ import { createSignal } from "solid-js";
 import { Navbar } from "../components/home/Navbar";
 import { Vertex } from "../utils/Form";
 import { newVertex } from "../utils/utils";
-import { navItems, homeGalleryData } from "../data";
+import { navItems, homeGalleryData, todayData } from "../data";
 import { GallerySection } from "../components/home/GallerySection";
 import List from "devextreme/ui/list";
 import { Link } from "@solidjs/router";
 import { Icon } from "@iconify-icon/solid";
 import { DrawerComponent } from "../components/devextreme/Drawer";
 import { ActionCards } from "../components/home/ActionCards";
+import { TodaysEnergizerSection } from "../components/home/TodaysEnergizerSection";
 
 export default function Home() {
   const navTemplate = function (e: Element) {
@@ -68,11 +69,10 @@ export default function Home() {
 
   const [isSideBarOpen, setSideBarOpen] = createSignal(false);
 
-  // Meta and Data
+  // Meta
   const navbarMeta = newVertex(0, ["Meta"], {
     id: "navbar",
     props: {
-      height: "100vh",
       position: "right",
       openedStateMode: "overlap",
       closeOnOutsideClick: true,
@@ -86,10 +86,21 @@ export default function Home() {
     props: { width: "100%", stretchImages: true },
   });
 
-  const data = newVertex(0, ["Vertex"], {
-    navbar: navItems,
-    gallery: homeGalleryData,
+  const todayEnergizerMeta = newVertex(0, ["Meta"], {
+    id: "todayEnergizer",
+    props: {},
   });
+
+  // Data
+  const navbarData = newVertex(0, ["Vertex"], { navbar: navItems });
+
+  const galleryData = newVertex(0, ["Vertex"], { gallery: homeGalleryData });
+
+  const drawerData = newVertex(0, ["Vertex"], {})
+
+  const actionCardsData = newVertex(0, ["Vertex"], {})
+
+  const todaysEnergizerData = newVertex(0, ["Vertex"], { title: "Today's Energizer", todayEnergizer: todayData })
 
   const setValue = (attribute: Vertex, data: any) => {
     console.log(attribute, data);
@@ -102,21 +113,23 @@ export default function Home() {
         setSideBarOpen={setSideBarOpen}
         template={navTemplate}
         meta={navbarMeta}
-        data={data}
+        data={drawerData}
         setValue={setValue}
       >
         <Navbar
           isSideBarOpen={isSideBarOpen}
           setSideBarOpen={setSideBarOpen}
           meta={navbarMeta}
-          data={data}
+          data={navbarData}
           setValue={setValue}
         />
 
-        <div class="p:15 bg:#f7f7f7 min-height:100vh">
-          <ActionCards meta={galleryMeta} data={data} setValue={setValue} />
+        <div class="p:15 bg:#f7f7f7">
+          <ActionCards meta={galleryMeta} data={actionCardsData} setValue={setValue} />
 
-          <GallerySection meta={galleryMeta} data={data} setValue={setValue} />
+          <GallerySection meta={galleryMeta} data={galleryData} setValue={setValue} />
+
+          {/* <TodaysEnergizerSection meta={todayEnergizerMeta} data={todaysEnergizerData} setValue={setValue} /> */}
         </div>
       </DrawerComponent>
     </div>
